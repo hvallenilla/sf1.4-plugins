@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en_US" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+         <source>Languages</source>
+         <target>Idiomas</target>
+      </trans-unit>
+      <trans-unit id="2">
+         <source>Add new language</source>
+         <target>Agregar idioma</target>
+      </trans-unit>
+      <trans-unit id="3">
+         <source>Edit language</source>
+         <target>Editar idioma</target>
+      </trans-unit>
+    <!-- Falta traducir -->  
+     <trans-unit id="4">
+         <source>Language</source>
+         <target>Idioma</target>
+     </trans-unit>
+         <trans-unit id="5">
+         <source>Country</source>
+         <target>País</target>
+     </trans-unit>
+         <trans-unit id="6">
+         <source>Principal</source>
+         <target>Principal</target>
+     </trans-unit>
+         <trans-unit id="7">
+         <source>Status</source>
+         <target>Status</target>
+     </trans-unit>
+        </body>
+  </file>
+</xliff>
+

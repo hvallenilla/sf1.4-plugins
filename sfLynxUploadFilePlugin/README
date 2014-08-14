@@ -1,0 +1,107 @@
+==================================================================================================================
+sfLynxUploadFilePlugin plugin v4.0
+Kluge Aberic. Todos los derechos reservados
+This plugin is part of the LynxCMS (c) 2010-2011
+
+Authors:
+Henry Vallenilla    <hvallenilla@aberic.com>
+The sfLynxUploadFilePlugin is developed in Symfony v.1.4
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+==================================================================================================================
+
+El sfLynxUploadFilePlugin v.4.0 (Versión traducida al ingles) Symfony Version 1.4
+
+El sfLynxUploadFilePlugin es un plugin que proporciona un helper para la carga de archivos en
+forma dinámica.
+
+El sfLynxUploadFilePlugin es propiedad exclusiva de  Kluge Aberic. El uso de sfLynxUploadFilePlugin
+esta sujeto estrictamente a los acuerdos que Kluge Aberic realice con sus clientes.
+
+-----------------------------------------------------------------------------------------------------------------
+Dependencias
+-----------------------------------------------------------------------------------------------------------------
+
+class lynxValida.class.php
+sfThumbnailPlugin
+
+-----------------------------------------------------------------------------------------------------------------
+Instalacion
+-----------------------------------------------------------------------------------------------------------------
+
+  1) Instalar el Plugin
+
+       svn:externals sfLynxUploadFilePlugin svn://aberic.homeunix.com/sfLynxUploadFilePlugin/trunk
+  
+  2) Existen dos maneras de configuración:
+
+     2.1) En el módulo o los módulos donde se vaya a usar el helper debe crearse el archivo module.yml
+          en la carpeta config de dicho módulo. La estructura para que el helper funcione es la siguiente:
+
+        all:
+          configuration:
+            upload_images:
+              # Número de copias
+              copies:             NUMERO DE COPIAS "DEBE COINCIDIR CON LA CANTIDAD DE TAMAÑOS"
+              size_1:   {pref_1: small, image_width_1: #, image_height_1: #}
+              size_N:   {pref_N: """, image_width_N: #, image_height_N: #}
+
+     2.2) En el app.yml de la aplicación:
+        all:
+            upload_images:         
+                nombre_modulo:
+                  copies:   NUMERO DE COPIAS "DEBE COINCIDIR CON LA CANTIDAD DE TAMAÑOS"
+                  size_1:   {pref_1: small, image_width_1: #, image_height_1: #}
+                  size_N:   {pref_N: """, image_width_N: #, image_height_N: #}
+
+
+  3) Elimine la cache con  ./symfony cc
+  5) Si todos estos pasos fueron ejecutados secuencialmente y con exito; el plugin debe estar
+instalado correctamente.
+
+== uploadFile Helpers documentation ==
+
+A continuación se presenta la sintaxis completa para cargar archivos con el Helper
+
+En tu funcion proccessForm despues de guardar los datos del nuevo registro agregar:
+
+        // Detecto si hay una nueva imagen
+        if($form->getValue('image'))
+        {
+            $file = $form->getValue('image');
+            $Model = ModelPeer::retrieveByPK($Model->getId());
+            // Aqui cargo la imagen con la funcion loadFiles de mi Helper
+            sfProjectConfiguration::getActive()->loadHelpers('uploadFile');
+            $fileUploaded = loadFiles($file->getOriginalName(), $file->getTempname(), 0, sfConfig::get('app_directory_upload'), $Model->getId(), false);
+            $Model->setImage($fileUploaded);
+            $Model->save();
+        }
+
+        IMPORTANTE: El último parámetro indica si el helper leerá del module.yml o del app.yml
+
+De esta manera se cargan los archivo al directorio especifico.
+Pero esto no lo es todo, al momento de edición del registro y selecciono una nueva imagen debo borrar
+la anterior. Para esto, en el método doSave de su FormClass Model ó en la función que esten usando
+para guardar los cambios, se debe incluir lo siguiente:
+
+   protected function doSave($con = null)
+    {
+        // Si hay un nuevo archivo por subir y ya mi registro tiene un archivo asociado entonces,
+        if ($this->getObject()->getImage() && $this->getValue('image'))
+	{
+            // recorro y elimino
+            $configParam = sfConfig::get('mod_MODULE_configuration_upload_images');
+            for($i=1;$i<=$configParam['copies'];$i++)
+            {
+                // Elimino las fotos de la carpeta
+                if(is_file(sfConfig::get('app_directory_poster').$configParam['size_'.$i]['pref_'.$i].'_'.$this->getObject()->getImage()))
+                {
+                 unlink(sfConfig::get('app_directory_poster').$configParam['size_'.$i]['pref_'.$i].'_'.$this->getObject()->getImage());
+                }
+            }
+        }
+	return parent::doSave($con);
+    }
+
+   

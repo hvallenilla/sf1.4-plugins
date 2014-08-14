@@ -1,0 +1,26 @@
+all:
+  is_secure: on
+
+index:
+  credentials: [language_view]
+
+new:
+  credentials: [language_view, language_insert]
+
+create:
+  credentials: [language_view, language_insert]
+
+edit:
+  credentials: [language_view, language_update]
+
+delete:
+  credentials: [language_view, language_delete]
+
+deleteAll:
+  credentials: [language_view, language_delete]
+
+changeStatus:
+  credentials: [language_view, language_update]
+
+deleteImage:
+  credentials: [language_view, language_update]

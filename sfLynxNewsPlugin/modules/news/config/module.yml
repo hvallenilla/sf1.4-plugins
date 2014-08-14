@@ -1,0 +1,4 @@
+all:
+  msn:
+    ppal_permissions: Núcleo habilitado a notícia
+    no_permissions: O núcleo selecionado não está habilitado

@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en_US" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+         <source>news</source>
+         <target>news</target>
+      </trans-unit>
+      <trans-unit id="2">
+         <source>Add new news</source>
+         <target>Agregar news</target>
+      </trans-unit>
+      <trans-unit id="3">
+         <source>Edit news</source>
+         <target>Editar news</target>
+      </trans-unit>
+    <!-- Falta traducir -->  
+     <trans-unit id="4">
+         <source>Title</source>
+         <target>Title</target>
+     </trans-unit>
+         <trans-unit id="5">
+         <source>Sub title</source>
+         <target>Sub title</target>
+     </trans-unit>
+         <trans-unit id="6">
+         <source>Body</source>
+         <target>Body</target>
+     </trans-unit>
+         <trans-unit id="7">
+         <source>Date</source>
+         <target>Date</target>
+     </trans-unit>
+         <trans-unit id="8">
+         <source>Summary</source>
+         <target>Summary</target>
+     </trans-unit>
+         <trans-unit id="9">
+         <source>Author</source>
+         <target>Author</target>
+     </trans-unit>
+         <trans-unit id="10">
+         <source>Image</source>
+         <target>Image</target>
+     </trans-unit>
+         <trans-unit id="11">
+         <source>Status</source>
+         <target>Status</target>
+     </trans-unit>
+         <trans-unit id="12">
+         <source>Home</source>
+         <target>Home</target>
+     </trans-unit>
+         <trans-unit id="13">
+         <source>Permalink</source>
+         <target>Permalink</target>
+     </trans-unit>
+         <trans-unit id="14">
+         <source>Home title</source>
+         <target>Home title</target>
+     </trans-unit>
+        </body>
+  </file>
+</xliff>
+

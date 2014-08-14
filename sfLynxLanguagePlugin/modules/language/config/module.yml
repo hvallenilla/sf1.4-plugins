@@ -1,0 +1,13 @@
+all:
+  msn:
+    ayuda: <img  src="%sf_admin_web_dir%/images/help.png" align="left" />&nbsp;Para evitar errores en el sistema, aseg&uacute;rese que la selecci&oacute;n de idioma y pa&iacute;s sea la correcta.
+    error_no_status:  |
+          <img  src="%sf_admin_web_dir%/images/error.png" align="left" />
+          &nbsp;Your changes have been made. &nbsp;The language can not be disabled.
+    error_status_desactivo:      The language can't be disabled.    
+    error_language_principal:    This language is principal.        
+    error_culture_duplicate:     <img  src="%sf_admin_web_dir%/images/error.png" align="left" />&nbsp;Error de duplicidad al guardar idioma.
+    leyenda:  |
+          <img  src="%sf_admin_web_dir%/images/1.png" align="left" /> <img  src="%sf_admin_web_dir%/images/0.png" align="left" />&nbsp; Definir idioma como principal<br>
+    idioma_base: <img  src="%sf_admin_web_dir%/images/error.png" align="left" />&nbsp;No esta permitido borrar el idioma base del sistema.
+                              

@@ -1,0 +1,120 @@
+==================================================================================================================
+sfLynxLanguagePlugin plugin v4.0
+Kluge Aberic. Todos los derechos reservados
+This plugin is part of the LynxCMS (c) 2010-2011 
+
+Authors:
+Henry Vallenilla    <hvallenilla@aberic.com>
+David Quiñones      <dquinones@aberic.com>
+The sfLynxLanguagePlugin is developed in Symfony v.1.4
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+==================================================================================================================
+
+El sfLynxLanguagePlugin v.4.0 (Versión traducida al ingles) Symfony Version 1.4
+
+El sfLynxLanguagePlugin es un plugin que proporciona el modulo genérico de idiomas para cualquier proyecto
+web multi-idiomas.
+
+El sfLynxLanguagePlugin es propiedad exclusiva de  Kluge Aberic. El uso de sfLynxLanguagePlugin esta sujeto
+estrictamente a los acuerdos que Kluge Aberic realice con sus clientes.
+
+-----------------------------------------------------------------------------------------------------------------
+Tablas utilizadas
+-----------------------------------------------------------------------------------------------------------------
+
+sf_language	(instalada por el plugin)
+
+-----------------------------------------------------------------------------------------------------------------
+Dependencias
+-----------------------------------------------------------------------------------------------------------------
+
+No tiene dependencias con otro plugin y/o modulos del proyecto
+
+-----------------------------------------------------------------------------------------------------------------
+Instalacion
+-----------------------------------------------------------------------------------------------------------------
+
+  1) Instalar el Plugin
+
+       svn:externals sfLynxLanguagePlugin svn://aberic.homeunix.com/sfLynxLanguagePlugin/trunk
+
+  2) El archivo "plugins.sfLanguagePlugin.schema.sql" ubicado en
+		"plugins/sfLynxLanguagePlugin/config/"
+
+		DEBE COPIARSE A la ruta "data/sql" de su proyecto:
+
+		(Es obligatorio para que funcione el punto 4)
+
+  3) Abra el archivo "sqldb.map" ubicado en la ruta "data/sql" de su proyecto. Encontrara las
+    siguientes lineas por defecto (pueden haber otras inclusive)
+        # Sqlfile -> Database map
+	lib.model.schema.sql=propel
+
+    Agregue a continuacion la siguiente linea (obligatorio para que funcione el punto 4) y momentaneamente elimine la línea anterior
+    el archivo debe quedar de esta forma:
+        # Sqlfile -> Database map
+        plugins.sfLanguagePlugin.schema.sql=propel
+
+    Atencion: si este archivo no existe en la ruta indicaba; copie el archivo del paso 2 en la carpeta "data/sql"
+
+  4) Actualizacion de la base de datos del proyecto ./symfony propel:insert-sql
+
+     Ó usted puede crear la nueva tabla utilizando el SQL generado en data/sql/plugins.sfLynxLanguagePlugin.lib.model.language.schema.sql
+
+    Por favor, verifique que efectivamente se creo la tabla "sf_language" en la base de datos del proyecto
+    Proceda a colocar de nuevo la línea que fue eliminada en el paso 3 si se realizó alguna eliminación momentánea.
+    Atencion: la ejecucion de este comando implica la existencia del archivo "schema.yml o schema.xml" en la ruta "config/" de su proyecto.
+    Verifique la existencia del mismo; si no existen se pueden crear en blanco.
+
+  5) Se genera el modelo  ./symfony propel:build-model
+  6) Se genera el modelo de los formularios ./symfony propel:build-forms
+  7) Habilitar el modulo en su settings.yml de la aplicacion y verificar que no estén declarados por duplicado
+
+    [yml]
+        all:
+            .settings:
+                enabled_modules:
+                    - default
+                    - language
+
+  8) Elimine la cache con  ./symfony cc
+  9) Agregar el plugin en el archivo "ProjectConfiguration.class.php" ubicado en "config/"
+     colocarlo en la siguiente línea:
+    ...
+        $this->enablePlugins(...., 'sfLynxLanguagePlugin');
+    ...
+  10) En caso de necesitar ejecutar el comando "symfony propel:build-schema --xml"; despues de su ejecucion, debe depurar el mismo.
+     Para ello, leer el punto "a" del apendice
+  11) Si todos estos paso fueron ejecutados secuencialmente y con exito; el plugin debe estar instalado correctamente.
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------IMPORTANTE:-------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+Para que las tablas creadas tengan formato latino, debe verificar su configuracion de my.ini (Windows) - my.cnf, respectivamente.
+
+#Conjunto de caracteres por defecto que se utilizaron para un nuevo esquema o tabla
+
+default-character-set=latin1
+default-collation = latin1_spanish_ci
+
+# El motor de almacenamiento por defecto que se utilizaron para crear nuevas tablas cuando
+
+default-storage-engine=INNODB
+
+-----------------------------------------------------------------------------------------------------------------
+Apendice
+-----------------------------------------------------------------------------------------------------------------
+
+ 	a) Limpieza del archivo "schema.xml" en la ruta "config/" de su proyecto
+
+	Se debe borrar las lineas que corresponden a las tablas de generacion de este archivo (En este caso la tabla sf_language)
+
+	Lineas a borrar:
+
+		<table name="sf_language" idMethod="native">
+		   .
+		   .
+		   .
+		</table>

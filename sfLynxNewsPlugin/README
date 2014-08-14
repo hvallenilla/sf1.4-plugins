@@ -1,0 +1,119 @@
+==================================================================================================================
+sfLynxNewsPlugin plugin v4.0
+Kluge Aberic. Todos los derechos reservados
+This plugin is part of the LynxCMS (c) 2010-2011 
+
+Developed by:
+David Quiñones      <dquinones@aberic.com>
+The sfLynxNewsPlugin is developed in Symfony v.1.4
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+==================================================================================================================
+
+El sfLynxNewsPlugin v.4.0 (Versión traducida al ingles) Symfony Version 1.4
+
+El sfLynxNewsPlugin es un plugin que proporciona el modulo generico de noticias para cualquier proyecto web.
+
+El sfLynxNewsPlugin es propiedad exclusiva de  Kluge Aberic. El uso de sfLynxNewsPlugin esta sujeto
+estrictamente a los acuerdos que Kluge Aberic realice con sus clientes.
+
+-----------------------------------------------------------------------------------------------------------------
+Tablas utilizadas
+-----------------------------------------------------------------------------------------------------------------
+
+sf_news
+
+-----------------------------------------------------------------------------------------------------------------
+Dependencias
+-----------------------------------------------------------------------------------------------------------------
+
+  1) sfThumbnailPlugin Descarga: http://symfony.aberic.com/sfThumbnailPlugin.rar
+  2) FCKEditor (ubicarlo en el directorio web/js)  Descarga: http://symfony.aberic.com/fckeditor.rar
+
+-----------------------------------------------------------------------------------------------------------------
+Instalacion
+-----------------------------------------------------------------------------------------------------------------
+
+  1) Instalar el Plugin
+
+       svn:externals sfLynxNewsPlugin svn://aberic.homeunix.com/sfLynxNewsPlugin/trunk
+
+  2) El archivo "plugins.sfLynxNewsPlugin.schema.sql" ubicado en "plugins/sfLynxNewsPlugin/data/sql/"
+     debe copiarse a la ruta "data/sql" de su proyecto (Es obligatorio para que funcione el punto 4).
+
+  3) Abra el archivo "sqldb.map" ubicado en la ruta "data/sql" de su proyecto. Encontrara las
+    siguientes lineas por defecto (pueden haber otras inclusive)
+        # Sqlfile -> Database map
+	lib.model.schema.sql=propel
+
+        Agregue a continuacion la siguiente linea (obligatorio para que funcione el punto 4):
+        
+        plugins.sfLynxNewsPlugin.schema.sql=propel
+
+    Atencion: si este archivo no existe en la ruta indicaba; copie el archivo del paso 2 en la carpeta "data/sql"
+
+  4) Actualizacion de la base de datos del proyecto ./symfony propel:insert-sql
+
+     Ó usted puede crear la nueva tabla utilizando el SQL generado en data/sql/plugins.sfLynxNewsPlugin.schema.sql
+
+    Por favor, verifique que efectivamente se crearon las tablas "sf_news" en la base de datos del proyecto
+    Atencion: la ejecucion de este comando implica la existencia del archivo "schema.yml o schema.xml" en la ruta "config/" de su proyecto.
+    Verifique la existencia del mismo; si no existen se pueden crear en blanco.
+
+  5) Habilitar el modulo en su settings.yml de la aplicacion
+
+    [yml]
+        all:
+            .settings:
+                enabled_modules:
+                    - default
+                    - news
+   Posteriormente se debe habilitar en plugin en el proyecto, se modifica el archivo ProjectConfiguration.class.php ubicado en la carpeta config del
+   proyecto, agregando "sfLynxNewsPlugin" como una accion mas de $this->enablePlugins();
+
+  6) Habilitar el FCKEditor en su settings.yml de la aplicacion
+
+    [yml]
+        all:
+    	    .settings:
+                rich_text_fck_js_dir:   js/fckeditor
+ 
+  7.- Se genera el modelo  ./symfony propel:build-model
+  8.- Se genera el modelo de los formularios ./symfony propel:build-forms
+  9) Elimine la cache con  ./symfony cc
+  10) En caso de necesitar ejecutar el comando "symfony propel:build-schema --xml"; despues de su ejecucion, debe depurar el mismo.
+     Para ello, leer el punto "a" del apendice
+  11) Si todos estos paso fueron ejecutados secuencialmente y con exito; el plugin debe estar instalado correctamente.
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------IMPORTANTE:-------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+Para que las tablas creadas tengan formato latino, debe verificar su configuracion de my.ini (Windows) - my.cnf, respectivamente.
+
+#Conjunto de caracteres por defecto que se utilizaron para un nuevo esquema o tabla
+
+default-character-set=latin1
+default-collation = latin1_spanish_ci
+
+# El motor de almacenamiento por defecto que se utilizaron para crear nuevas tablas cuando
+
+default-storage-engine=INNODB
+
+-----------------------------------------------------------------------------------------------------------------
+Apendice
+-----------------------------------------------------------------------------------------------------------------
+
+ 	a) Limpieza del archivo "schema.xml" en la ruta "config/" de su proyecto
+
+	Se deben cortar las lineas que corresponden a las tablas de generacion de este archivo (En este caso la tabla sf_news)
+
+	Lineas contenidas en las siguiente etiquetas xml a borrar:
+
+		<table name="sf_news" idMethod="native">
+		   .
+		   .
+		   .
+		</table>
+    Posteriormente se deben copiar en news.schema.xml en la carpeta config del plugin, por ultimo se regenera el modelo y los formularios
+    (./symfony propel:build-model, ./symfony propel:build-forms) para que los cambios sean efectivos
